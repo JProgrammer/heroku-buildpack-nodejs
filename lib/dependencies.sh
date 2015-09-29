@@ -1,8 +1,6 @@
 install_node_modules() {
   local build_dir=${1:-}
 
-  export FORCE_RPATH=1
-
   if [ -e $build_dir/package.json ]; then
     cd $build_dir
     echo "Pruning any extraneous modules"
@@ -12,7 +10,7 @@ install_node_modules() {
     else
       echo "Installing node modules (package.json)"
     fi
-    npm install --unsafe-perm --userconfig $build_dir/.npmrc 2>&1
+    FORCE_RPATH=1 npm install --unsafe-perm --userconfig $build_dir/.npmrc 2>&1
   else
     echo "Skipping (no package.json)"
   fi
@@ -20,8 +18,6 @@ install_node_modules() {
 
 rebuild_node_modules() {
   local build_dir=${1:-}
-
-  export FORCE_RPATH=1
 
   if [ -e $build_dir/package.json ]; then
     cd $build_dir
@@ -32,7 +28,7 @@ rebuild_node_modules() {
     else
       echo "Installing any new modules (package.json)"
     fi
-    npm install --unsafe-perm --userconfig $build_dir/.npmrc 2>&1
+    FORCE_RPATH=1 npm install --unsafe-perm --userconfig $build_dir/.npmrc 2>&1
   else
     echo "Skipping (no package.json)"
   fi
