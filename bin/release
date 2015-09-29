@@ -3,13 +3,11 @@
 
 BUILD_DIR=${1:-}
 
-LD_LIBRARY_PATH=$BUILD_DIR/.oracle/:${LD_LIBRARY_PATH:+LD_LIBRARY_PATH:}
-
 cat << EOF
 addons: []
 default_process_types:
   web: npm start
 config_vars:
-  OCI_LIB_DIR: $BUILD_DIR/.oracle/
-  LD_LIBRARY_PATH: $LD_LIBRARY_PATH
+  OCI_LIB_DIR: "$BUILD_DIR/.oracle/"
+  LD_LIBRARY_PATH: "$BUILD_DIR/.oracle/:${LD_LIBRARY_PATH:+LD_LIBRARY_PATH:}"
 EOF
