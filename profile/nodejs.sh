@@ -27,6 +27,7 @@ detect_memory() {
   esac
 }
 
+local oracle_home="$HOME/.oracle/"
 
 export PATH="$HOME/.heroku/node/bin:$HOME/bin:$HOME/node_modules/.bin:$oracle_home:$PATH"
 export NODE_HOME="$HOME/.heroku/node"
