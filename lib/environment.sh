@@ -1,15 +1,9 @@
-ORACLE_HOME = "$BUILD_DIR/.oracle/"
+
 
 create_default_env() {
   export NPM_CONFIG_PRODUCTION=${NPM_CONFIG_PRODUCTION:-true}
   export NPM_CONFIG_LOGLEVEL=${NPM_CONFIG_LOGLEVEL:-error}
   export NODE_MODULES_CACHE=${NODE_MODULES_CACHE:-true}
-  export ORACLE_HOME=${ORACLE_HOME}
-  export LD_LIBRARY_PATH=${ORACLE_HOME}:$LD_LIBRARY_PATH
-  export PATH=${ORACLE_HOME}:$PATH
-  export TNS_ADMIN=${ORACLE_HOME}/network/admin
-  export OCI_LIB_DIR=${ORACLE_HOME}
-  export OCI_INC_DIR=${ORACLE_HOME}/sdk/include
 }
 
 list_node_config() {
@@ -43,6 +37,13 @@ write_profile() {
 write_export() {
   local bp_dir="$1"
   local build_dir="$2"
+  local oracle_home = "$bp_dir/.oracle/"
   echo "export PATH=\"$build_dir/.heroku/node/bin:$build_dir/node_modules/.bin:\$PATH\"" > $bp_dir/export
+  echo "export ORACLE_HOME=\"${oracle_home}\"" > $bp_dir/export
+  echo "export LD_LIBRARY_PATH=\"${oracle_home}:\$LD_LIBRARY_PATH\"" > $bp_dir/export
+  echo "export PATH=\"${oracle_home}:$PATH\"" > $bp_dir/export
+  echo "export TNS_ADMIN=\"${oracle_home}/network/admin\"" > $bp_dir/export
+  echo "export OCI_LIB_DIR=\"${oracle_home}\"" > $bp_dir/export
+  echo "export OCI_INC_DIR=\"${oracle_home}/sdk/include\"" > $bp_dir/export
   echo "export NODE_HOME=\"$build_dir/.heroku/node\"" >> $bp_dir/export
 }
