@@ -1,6 +1,8 @@
 install_node_modules() {
   local build_dir=${1:-}
 
+  export FORCE_RPATH=1
+
   if [ -e $build_dir/package.json ]; then
     cd $build_dir
     echo "Pruning any extraneous modules"
@@ -18,6 +20,8 @@ install_node_modules() {
 
 rebuild_node_modules() {
   local build_dir=${1:-}
+
+  export FORCE_RPATH=1
 
   if [ -e $build_dir/package.json ]; then
     cd $build_dir
