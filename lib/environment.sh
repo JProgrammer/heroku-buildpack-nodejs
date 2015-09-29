@@ -37,13 +37,12 @@ write_profile() {
 write_export() {
   local bp_dir="$1"
   local build_dir="$2"
-  local oracle_home = "$bp_dir/.oracle/"
-  echo "export PATH=\"$build_dir/.heroku/node/bin:$build_dir/node_modules/.bin:\$PATH\"" > $bp_dir/export
-  echo "export ORACLE_HOME=\"${oracle_home}\"" >> $bp_dir/export
-  echo "export LD_LIBRARY_PATH=\"${oracle_home}:\$LD_LIBRARY_PATH\"" >> $bp_dir/export
-  echo "export PATH=\"${oracle_home}:$PATH\"" >> $bp_dir/export
-  echo "export TNS_ADMIN=\"${oracle_home}/network/admin\"" >> $bp_dir/export
-  echo "export OCI_LIB_DIR=\"${oracle_home}\"" >> $bp_dir/export
-  echo "export OCI_INC_DIR=\"${oracle_home}/sdk/include\"" >> $bp_dir/export
+  local oracle_home = "$build_dir/.oracle/"
+  echo "export PATH=\"$build_dir/.heroku/node/bin:$build_dir/node_modules/.bin:oracle_home:\$PATH\"" > $bp_dir/export
+  echo "export ORACLE_HOME=\"$oracle_home\"" >> $bp_dir/export
+  echo "export LD_LIBRARY_PATH=\"$oracle_home:\$LD_LIBRARY_PATH\"" >> $bp_dir/export
+  echo "export TNS_ADMIN=\"$oracle_home/network/admin\"" >> $bp_dir/export
+  echo "export OCI_LIB_DIR=\"$oracle_home\"" >> $bp_dir/export
+  echo "export OCI_INC_DIR=\"$oracle_home/sdk/include\"" >> $bp_dir/export
   echo "export NODE_HOME=\"$build_dir/.heroku/node\"" >> $bp_dir/export
 }
