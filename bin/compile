@@ -24,32 +24,6 @@ curl https://www.dropbox.com/s/ro5rfqwgtjdo75b/oracle-instantclient-full-12.1-li
 export OCI_LIB_DIR=$BUILD_DIR/.oracle/
 export OCI_INC_DIR=$BUILD_DIR/.oracle/sdk/include
 
-`mkdir -p #{BUILD_DIR}/.profile.d`
-
-open("#{BUILD_DIR}/.profile.d/oracle.sh", "w") do |f|
-  ORACLE_HOME = "/app/#{ORACLE_INSTANT_CLIENT_DIR}"
-  f.puts "export ORACLE_HOME=#{ORACLE_HOME}"
-  f.puts "export LD_LIBRARY_PATH=#{ORACLE_HOME}:$LD_LIBRARY_PATH"
-  f.puts "export PATH=#{ORACLE_HOME}:$PATH"
-  f.puts "export TNS_ADMIN=#{ORACLE_HOME}/network/admin"
-  f.puts "export OCI_LIB_DIR=#{ORACLE_HOME}"
-  f.puts "export OCI_INC_DIR=#{ORACLE_HOME}/sdk/include"
-end
-
-if ENV_DIR
-  LD_LIBRARY_PATH_FILE = File.join(ENV_DIR, 'LD_LIBRARY_PATH')
-  existing_ld_library_path = `cat #{LD_LIBRARY_PATH_FILE}`  if File.exists?(LD_LIBRARY_PATH_FILE)
-
-  open(File.join(ENV_DIR,'LD_LIBRARY_PATH'), 'w') do |f|
-    value = "#{BUILD_DIR}/#{ORACLE_INSTANT_CLIENT_DIR}"
-    unless existing_ld_library_path.nil? || existing_ld_library_path.trim.empty?
-      value += ":#{existing_ld_library_path}"
-    end
-    f.puts value
-  end
-end
-
-
 # CF Common
 export BUILDPACK_PATH=$BP_DIR
 source $BP_DIR/compile-extensions/lib/common

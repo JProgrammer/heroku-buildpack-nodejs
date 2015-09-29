@@ -1,7 +1,15 @@
+ORACLE_HOME = "$BUILD_DIR/.oracle/"
+
 create_default_env() {
   export NPM_CONFIG_PRODUCTION=${NPM_CONFIG_PRODUCTION:-true}
   export NPM_CONFIG_LOGLEVEL=${NPM_CONFIG_LOGLEVEL:-error}
   export NODE_MODULES_CACHE=${NODE_MODULES_CACHE:-true}
+  export ORACLE_HOME=${ORACLE_HOME}
+  export LD_LIBRARY_PATH=${ORACLE_HOME}:$LD_LIBRARY_PATH
+  export PATH=${ORACLE_HOME}:$PATH
+  export TNS_ADMIN=${ORACLE_HOME}/network/admin
+  export OCI_LIB_DIR=${ORACLE_HOME}
+  export OCI_INC_DIR=${ORACLE_HOME}/sdk/include
 }
 
 list_node_config() {
